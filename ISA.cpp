@@ -131,6 +131,5 @@ void input()
 }
 void output()
 {
-    cout<<"out:"<<endl;
-    cout<<reg[first_object]<<endl;
+    cout<<"out: "<<reg[first_object]<<endl;
 }
