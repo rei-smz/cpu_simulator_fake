@@ -1,18 +1,14 @@
 //
 // Created by Administrator on 2020/4/11.
 //
-#include <string>
-#include <vector>
-#include <iostream>
-#include <fstream>
+#include "header.h"
 using namespace std;
-ifstream input_file("dict.dic");
-int mem_data_area[260];
-vector<string> mem_command_area;
-int reg[10]; //1 to 4 is data area and 5 to 8 is memory address area
-int PC=0,flag=0,ir;
-int operation,first_object,last_object;
-long long instant_num;
+void stop()
+{
+    register_output();
+    mem_output();
+    input_file.close();
+}
 void mov()
 {
     if(last_object==0) //moving instant number
@@ -122,6 +118,7 @@ void jmp()
         case 1: if(flag==0){PC+=((int)instant_num-4);}break;
         case 2: if(flag==1){PC+=((int)instant_num-4);}break;
         case 3: if(flag==-1){PC+=((int)instant_num-4);}break;
+        default:return;
     }
 }
 void input()
