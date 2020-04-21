@@ -3,13 +3,13 @@
 //
 #include "header.h"
 using namespace std;
-void stop()
+void CPU::stop()
 {
     register_output();
     mem_output();
     input_file.close();
 }
-void mov()
+void CPU::mov()
 {
     if(last_object==0) //moving instant number
     {
@@ -24,7 +24,7 @@ void mov()
         mem_data_area[(reg[first_object]-16384)/2]=reg[last_object];
     }
 }
-void add()
+void CPU::add()
 {
     if(last_object==0) //add instant number to register
     {
@@ -35,7 +35,7 @@ void add()
         reg[first_object]+=mem_data_area[(reg[last_object]-16384)/2];
     }
 }
-void sub()
+void CPU::sub()
 {
     if(last_object==0) //minus instant number with data in a register
     {
@@ -46,7 +46,7 @@ void sub()
         reg[first_object]-=mem_data_area[(reg[last_object]-16384)/2];
     }
 }
-void mul()
+void CPU::mul()
 {
     if(last_object==0) //multiply instant number with data in a register
     {
@@ -57,7 +57,7 @@ void mul()
         reg[first_object]*=mem_data_area[(reg[last_object]-16384)/2];
     }
 }
-void div()
+void CPU::div()
 {
     if(last_object==0) //divide data in a register with instant number
     {
@@ -68,28 +68,28 @@ void div()
         reg[first_object]/=mem_data_area[(reg[last_object]-16384)/2];
     }
 }
-void land()
+void CPU::land()
 {
     if(last_object==0)
         reg[first_object]=reg[first_object]&&instant_num;
     else
         reg[first_object]=reg[first_object]&&mem_data_area[(reg[last_object]-16384)/2];
 }
-void lor()
+void CPU::lor()
 {
     if(last_object==0)
         reg[first_object]=reg[first_object]||instant_num;
     else
         reg[first_object]=reg[first_object]||mem_data_area[(reg[last_object]-16384)/2];
 }
-void lnot()
+void CPU::lnot()
 {
     if(last_object==0)
         reg[first_object]=!reg[first_object];
     if(first_object==0)
         mem_data_area[(reg[last_object]-16384)/2]=!mem_data_area[(reg[last_object]-16384)/2];
 }
-void cmp()
+void CPU::cmp()
 {
     if(last_object==0) //compare data in register with instant number
     {
@@ -110,7 +110,7 @@ void cmp()
             flag=1;
     }
 }
-void jmp()
+void CPU::jmp()
 {
     switch (last_object)
     {
@@ -121,12 +121,12 @@ void jmp()
         default:return;
     }
 }
-void input()
+void CPU::input()
 {
     cout<<"in:"<<endl;
     cin>>reg[first_object];
 }
-void output()
+void CPU::output()
 {
     cout<<"out: "<<reg[first_object]<<endl;
 }

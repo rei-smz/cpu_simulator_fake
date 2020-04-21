@@ -3,7 +3,7 @@
 //
 #include "header.h"
 using namespace std;
-void read_command()
+void CPU::read_command()
 {
     string original_command;
     while (input_file.peek()!=EOF)
@@ -14,7 +14,7 @@ void read_command()
     for(int i=mem_command_area.size();i<128;i++)
         mem_command_area.emplace_back("0");
 }
-void mem_output()
+void CPU::mem_output()
 {
     cout<<endl<<"codeSegment :"<<endl;
     for(int i=0;i<mem_command_area.size();i++)
@@ -33,7 +33,7 @@ void mem_output()
             cout<<mem_data_area[i]<<" ";
     }
 }
-void register_output()
+void CPU::register_output()
 {
     cout<<"ip = "<<PC<<endl;
     cout<<"flag = "<<flag<<endl;
