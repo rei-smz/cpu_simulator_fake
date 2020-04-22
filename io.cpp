@@ -3,21 +3,23 @@
 //
 #include "header.h"
 using namespace std;
-void CPU::read_command()
+int CPU::read_command(ifstream &file,int begin)
 {
     string original_command;
-    while (input_file.peek()!=EOF)
+    int i=begin;
+    while (file.peek()!=EOF)
     {
-        getline(input_file,original_command);
-        mem_command_area.push_back(original_command);
+        getline(file,original_command);
+        mem_command_area[begin+i]=original_command;
+        i++;
     }
-    for(int i=mem_command_area.size();i<128;i++)
-        mem_command_area.emplace_back("0");
+    return i;
 }
 void CPU::mem_output()
 {
+    mt.lock();
     cout<<endl<<"codeSegment :"<<endl;
-    for(int i=0;i<mem_command_area.size();i++)
+    for(int i=0;i<128;i++)
     {
         if((i+1)%8==0)
             cout<<stoi(mem_command_area[i],nullptr,2)<<endl;
@@ -32,6 +34,7 @@ void CPU::mem_output()
         else
             cout<<mem_data_area[i]<<" ";
     }
+    mt.unlock();
 }
 void CPU::register_output()
 {
