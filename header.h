@@ -1,5 +1,5 @@
 //
-// Created by Administrator on 2020/4/15.
+// Created by Rei Shimizu on 2020/4/15.
 //
 
 #ifndef CPU_SIMULATOR_HEAD_H
