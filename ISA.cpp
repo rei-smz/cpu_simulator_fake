@@ -7,7 +7,6 @@ void CPU::stop()
 {
     register_output();
     mem_output();
-    input_file.close();
 }
 void CPU::mov()
 {
@@ -17,11 +16,15 @@ void CPU::mov()
     }
     else if(first_object>0&&first_object<=4&&last_object>=5&&last_object<=8) //moving data from memory
     {
+        mt.lock();
         reg[first_object]=mem_data_area[(reg[last_object]-16384)/2];
+        mt.unlock();
     }
     else if(first_object>=5&&first_object<=8&&last_object>0&&last_object<=4) //moving data from register
     {
+        mt.lock();
         mem_data_area[(reg[first_object]-16384)/2]=reg[last_object];
+        mt.unlock();
     }
 }
 void CPU::add()
@@ -32,7 +35,9 @@ void CPU::add()
     }
     else if(last_object>=5) //add data in memory to register
     {
+        mt.lock();
         reg[first_object]+=mem_data_area[(reg[last_object]-16384)/2];
+        mt.unlock();
     }
 }
 void CPU::sub()
@@ -43,7 +48,9 @@ void CPU::sub()
     }
     else if(last_object>=5) //minus data in memory with data in a register
     {
+        mt.lock();
         reg[first_object]-=mem_data_area[(reg[last_object]-16384)/2];
+        mt.unlock();
     }
 }
 void CPU::mul()
@@ -54,7 +61,9 @@ void CPU::mul()
     }
     else if(last_object>=5) //multiply data in memory with data in a register
     {
+        mt.lock();
         reg[first_object]*=mem_data_area[(reg[last_object]-16384)/2];
+        mt.unlock();
     }
 }
 void CPU::div()
@@ -65,7 +74,9 @@ void CPU::div()
     }
     else if(last_object>=5) //divide data in a register with data in memory
     {
+        mt.lock();
         reg[first_object]/=mem_data_area[(reg[last_object]-16384)/2];
+        mt.unlock();
     }
 }
 void CPU::land()
@@ -73,21 +84,33 @@ void CPU::land()
     if(last_object==0)
         reg[first_object]=reg[first_object]&&instant_num;
     else
+    {
+        mt.lock();
         reg[first_object]=reg[first_object]&&mem_data_area[(reg[last_object]-16384)/2];
+        mt.unlock();
+    }
 }
 void CPU::lor()
 {
     if(last_object==0)
         reg[first_object]=reg[first_object]||instant_num;
     else
+    {
+        mt.lock();
         reg[first_object]=reg[first_object]||mem_data_area[(reg[last_object]-16384)/2];
+        mt.unlock();
+    }
 }
 void CPU::lnot()
 {
     if(last_object==0)
         reg[first_object]=!reg[first_object];
     if(first_object==0)
+    {
+        mt.lock();
         mem_data_area[(reg[last_object]-16384)/2]=!mem_data_area[(reg[last_object]-16384)/2];
+        mt.unlock();
+    }
 }
 void CPU::cmp()
 {
@@ -102,12 +125,14 @@ void CPU::cmp()
     }
     else //compare data in register with data in memory
     {
+        mt.lock();
         if(reg[first_object]==mem_data_area[(reg[last_object]-16384)/2])
             flag=0;
         else if (reg[first_object]<mem_data_area[(reg[last_object]-16384)/2])
             flag=-1;
         else
             flag=1;
+        mt.unlock();
     }
 }
 void CPU::jmp()
