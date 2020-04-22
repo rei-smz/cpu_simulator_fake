@@ -1,7 +1,6 @@
 //
-// Created by Administrator on 2020/4/21.
+// Created by Rei Shimizu on 2020/4/21.
 //
-
 #include "header.h"
 #include "ISA.cpp"
 #include "io.cpp"
