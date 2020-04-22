@@ -19,9 +19,9 @@
 #define INPUT 11
 #define OUTPUT 12
 using namespace std;
-void CPU::opr(int begin,int size)
+void CPU::opr()
 {
-    for(int i=begin;i<size;i++)
+    for(int i=0;i<mem_command_area.size();i++)
     {
         command_to_operation(mem_command_area[i]);
         switch (operation)
@@ -36,14 +36,13 @@ void CPU::opr(int begin,int size)
             case LOR: lor();break;
             case LNOT: lnot();break;
             case CMP: cmp();break;
-            case JMP: jmp();i=begin+PC/4-1;break;
+            case JMP: jmp();i=PC/4-1;break;
             case INPUT: input();break;
             case OUTPUT: output();break;
             default: return;
         }
         register_output();
     }
-
 }
 void CPU::command_to_operation(const string &command)
 {
