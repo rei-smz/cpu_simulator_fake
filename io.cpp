@@ -6,14 +6,14 @@ using namespace std;
 int CPU::read_command(ifstream &file,int begin)
 {
     string original_command;
-    int i=begin;
+    int i=0;
     while (file.peek()!=EOF)
     {
         getline(file,original_command);
         mem_command_area[begin+i]=original_command;
         i++;
     }
-    return i;
+    return begin+i;
 }
 void CPU::mem_output()
 {
