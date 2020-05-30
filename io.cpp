@@ -3,7 +3,7 @@
 //
 #include "header.h"
 using namespace std;
-int CPU::read_command(ifstream &file,int begin)
+void CPU::read_command(ifstream &file,int begin)
 {
     string original_command;
     int i=0;
@@ -13,7 +13,6 @@ int CPU::read_command(ifstream &file,int begin)
         mem_command_area[begin+i]=original_command;
         i++;
     }
-    return begin+i;
 }
 void CPU::mem_output()
 {

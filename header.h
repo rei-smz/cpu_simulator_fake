@@ -22,12 +22,13 @@ class CPU
 {
     public:
         void opr(int begin,int size);
-        int read_command(ifstream &file,int begin);
+        static void read_command(ifstream &file,int begin);
     private:
+        int id;
         int reg[10]={0}; //1 to 4 is data area and 5 to 8 is memory address area
         long long instant_num=0;
         int PC=0,flag=0,ir=0;
-        int operation,first_object,last_object;
+        int operation=-1,first_object=-1,last_object=-1;
         void command_to_operation(const string& command);
         static void mem_output();
         void register_output();

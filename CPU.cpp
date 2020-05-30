@@ -19,9 +19,9 @@
 #define INPUT 11
 #define OUTPUT 12
 using namespace std;
-void CPU::opr(int begin,int size)
+void CPU::opr(int begin,int end)
 {
-    for(int i=begin;i<size;i++)
+    for(int i=begin;i<end;i++)
     {
         command_to_operation(mem_command_area[i]);
         switch (operation)
