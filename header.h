@@ -36,7 +36,7 @@ mem_lock* lock_chain_head=NULL;
 pthread_mutex_t io_mutex;
 
 
-//declare functions
+//=========================================declare functions
 CPU * new_cpu(int id)
 {
     CPU *cpu;
@@ -51,7 +51,7 @@ CPU * new_cpu(int id)
     cpu->first_object=-1;
     cpu->last_object=-1;
     return cpu;
-}
+} //initialize CPU class
 void delete_cpu(CPU* cpu)
 {
     free(cpu);
@@ -67,7 +67,7 @@ void destory_mem_lock(mem_lock* h)
         free(t);
     }
 }
-long long stoi(int begin,int end,char* s)
+long long bstoi(int begin,int end,char* s) //convert binary strings to integers
 {
     char *p=NULL;
     long long sum=0,power=1;
@@ -87,26 +87,25 @@ long long stoi(int begin,int end,char* s)
     }
     return sum;
 }
-void read_command(FILE *f,CPU* cpu);
-void opr(CPU* cpu,int begin,int size);
-void command_to_operation(CPU* cpu,char* command);
-static void mem_output();
-void register_output(CPU* cpu);
-void stop(CPU* cpu);
-void mov(CPU* cpu);
-void add(CPU* cpu);
-void sub(CPU* cpu);
-void mul(CPU* cpu);
-void did(CPU* cpu);
-void land(CPU* cpu);
-void lor(CPU* cpu);
-void lnot(CPU* cpu);
-void cmp(CPU* cpu);
-void jmp(CPU* cpu);
-void input(CPU* cpu);
-void output(CPU* cpu);
-void lck(CPU* cpu);
-void ulck(CPU* cpu);
-void slp(CPU* cpu);
-//end declare functions
+void read_command(FILE *f,CPU* cpu); //read commands from files
+void opr(CPU* cpu,int begin,int size); //operations of CPU class
+void command_to_operation(CPU* cpu,char* command); //analyze commands
+static void mem_output(); //memory status output
+void register_output(CPU* cpu); //register status output
+void stop(CPU* cpu); //stop command function
+void mov(CPU* cpu); //move command function
+void add(CPU* cpu); //add command function
+void sub(CPU* cpu); //subtract command function
+void mul(CPU* cpu); //multiply command function
+void did(CPU* cpu); //divide command function
+void land(CPU* cpu); //logical and command function
+void lor(CPU* cpu); //logical or command function
+void lnot(CPU* cpu); //logical not command function
+void cmp(CPU* cpu); //compare command function
+void jmp(CPU* cpu); //jump command function
+void input(CPU* cpu); //input command function
+void output(CPU* cpu); //output command function
+void lck(CPU* cpu); //lock command function
+void ulck(CPU* cpu); //unlock command function
+void slp(CPU* cpu); //sleep command function
 #endif //CPU_SIMULATOR_HEAD_H

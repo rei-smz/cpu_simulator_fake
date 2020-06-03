@@ -1,8 +1,6 @@
 //
 // Created by Rei Shimizu on 2020/4/21.
 //
-
-#include "header.h"
 #include "ISA.c"
 #include "io.c"
 #define STOP 0
@@ -53,12 +51,12 @@ void opr(CPU* cpu,int begin,int end)
 }
 void command_to_operation(CPU* cpu,char* command)
 {
-    cpu->operation = (int)stoi(0,7,command);
-    cpu->first_object = (int)stoi(8,11,command);
-    cpu->last_object = (int)stoi(12,15,command);
-    cpu->instant_num = stoi(16,31,command);
+    cpu->operation = (int)bstoi(0,7,command);
+    cpu->first_object = (int)bstoi(8,11,command);
+    cpu->last_object = (int)bstoi(12,15,command);
+    cpu->instant_num = bstoi(16,31,command);
     if (cpu->instant_num > 32767)
         cpu->instant_num -= 65536;
     cpu->PC += 4;
-    cpu->ir = (int)stoi(0,15,command);
+    cpu->ir = (int)bstoi(0,15,command);
 }

@@ -1,7 +1,6 @@
 //
 // Created by Rei Shimizu on 2020/4/11.
 //
-#include "header.h"
 void stop(CPU* cpu)
 {
     register_output(cpu);
@@ -129,13 +128,11 @@ void input(CPU* cpu)
 {
     printf(("in:\n"));
     scanf("%d",&cpu->reg[cpu->first_object]);
-    //cin>>reg[first_object];
 }
 void output(CPU* cpu)
 {
-    pthread_mutex_trylock(&io_mutex);
+    pthread_mutex_lock(&io_mutex);
     printf("id = %d    out: %d\n",cpu->id,cpu->reg[cpu->first_object]);
-    //cout<<"out: "<<reg[first_object]<<endl;
     pthread_mutex_unlock(&io_mutex);
 }
 void lck(CPU* cpu)
@@ -146,7 +143,7 @@ void lck(CPU* cpu)
     {
         if(p->mem_addr==(int)cpu->instant_num)
         {
-            pthread_mutex_trylock(&p->mutex);
+            pthread_mutex_lock(&p->mutex);
             return;
         }
         t=p;
@@ -155,7 +152,7 @@ void lck(CPU* cpu)
     l=(mem_lock*)malloc(sizeof(mem_lock));
     pthread_mutex_init(&l->mutex,NULL);
     l->mem_addr=(int)cpu->instant_num;
-    pthread_mutex_trylock(&l->mutex);
+    pthread_mutex_lock(&l->mutex);
     l->next=NULL;
     if(lock_chain_head==NULL)
         lock_chain_head=l;
